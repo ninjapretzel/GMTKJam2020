@@ -1,3 +1,6 @@
 [submodule "Assets/Plugins/XtoJSON"]
 	path = Assets/Plugins/XtoJSON
 	url = https://github.com/ninjapretzel/XtoJSON.git
+[submodule "Assets/Plugins/LevelUpper"]
+	path = Assets/Plugins/LevelUpper
+	url = https://github.com/ninjapretzel/LevelUpper.git
