@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CrazierBricks
+  m_Shader: {fileID: 4800000, guid: efee3a48f4c99eb4d8362b3155ed8647, type: 3}
+  m_ShaderKeywords: FANCY_PARALLAX SWIZLE_OCTAVES
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _Bias: 0.25
+    - _Borderx: 0.094
+    - _Bordery: 0.2
+    - _BumpAmt: 0.77
+    - _BumpFactor: 0.745
+    - _BumpOctaves: 5
+    - _BumpPersistence: 0.666
+    - _CamDistScale: 21
+    - _DepthLayers: 8
+    - _FANCY_PARALLAX: 1
+    - _Factor1: 0.588
+    - _Factor2: 0.411
+    - _Glossiness: 0.794
+    - _HeightPower: 0.632
+    - _HeightScale: 24.1
+    - _Metallic: 0.206
+    - _MortarScale: 5
+    - _NormalScale: 33.37
+    - _Octaves: 8
+    - _Parallax: 333
+    - _ParallaxDistanceEffect: 1
+    - _ParallaxFactor: 0.584
+    - _Persistence: 0.667
+    - _Polish: 1
+    - _SWAP_ZY: 0
+    - _SWIZLE_OCTAVES: 1
+    - _Scale: 0.11
+    - _Seed: 31341.78
+    - _TexScale: 8
+    - _TileScale: 10
+    - _VoroScale: 0.5
+    - _WORLDSPACE: 0
+    - _WetHeight: 0.42
+    m_Colors:
+    - _ColorSpread: {r: 33, g: 6.4, b: 3.83, a: 33}
+    - _GroutColor1: {r: 0, g: 0, b: 0, a: 1}
+    - _GroutColor2: {r: 0.2352941, g: 0.2352941, b: 0.2352941, a: 1}
+    - _Offset: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+    - _Pan: {r: 0, g: 3, b: 0, a: 1}
+    - _TileBlend: {r: 0.5, g: 0.5, b: 55, a: 0}
+    - _TileColor1: {r: 0.4044118, g: 0.19925283, b: 0.04163062, a: 1}
+    - _TileColor2: {r: 0.35294116, g: 0.2121465, b: 0.0467128, a: 1}
+    - _TileColor3: {r: 0.3602941, g: 0.1865052, b: 0.052984435, a: 1}
+    - _TileColor4: {r: 0.61764705, g: 0.26835698, b: 0, a: 1}
+    - _TileOffset: {r: 26.84, g: 16.59, b: 8.85, a: 1}
+    - _TileOffsets: {r: 1, g: 0, b: 3, a: 0}
+    - _TileSampleScale: {r: 0.1, g: 0.1, b: 0.1, a: 0.5}
+    - _TileSampleScale2: {r: 0.4, g: 42, b: 3.1, a: 0}
+    - _TileSize: {r: 2.5, g: 1.52, b: 2.5, a: 0}
+    - _VoroBlend: {r: 0.52, g: 0.6, b: -1.56, a: 1.35}
+    - _VoroComp: {r: 1, g: -0.5, b: -0.5, a: 1.84}
+    - _WaterColor: {r: 1, g: 0, b: 0.972414, a: 1}

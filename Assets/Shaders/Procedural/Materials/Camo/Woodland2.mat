@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Woodland2
+  m_Shader: {fileID: 4800000, guid: 405f88ee25f4e094f86ee052148fbe9d, type: 3}
+  m_ShaderKeywords: SWIZLE_OCTAVES
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _BumpAmt: 0.639
+    - _BumpOctaves: 8
+    - _BumpPersistence: 0.78
+    - _BumpScale: 33
+    - _DiffLayers: 7.34
+    - _DiffNoiseJump: 4.19
+    - _Glossiness: 0.072
+    - _Metallic: 0.208
+    - _Octaves: 7.26
+    - _Persistence: 0.625
+    - _SWIZLE_OCTAVES: 1
+    - _Scale: 3.55
+    - _Seed: 13441.88
+    - _WORLDSPACE: 0
+    m_Colors:
+    - _Clips: {r: 1.4, g: 0.4, b: 0.36, a: 0.44}
+    - _Color1: {r: 0.80392164, g: 0.7607844, b: 0.4784314, a: 1}
+    - _Color2: {r: 0.19198745, g: 0.3897059, b: 0.19335103, a: 1}
+    - _Color3: {r: 0.39705884, g: 0.29698873, b: 0.18977076, a: 1}
+    - _Color4: {r: 0.16078432, g: 0.121568635, b: 0.16470589, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 1}
+    - _Stretch: {r: 0.5, g: 1, b: 1.5, a: 1}

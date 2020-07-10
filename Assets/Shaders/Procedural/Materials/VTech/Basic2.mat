@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Basic2
+  m_Shader: {fileID: 4800000, guid: cf2db99a88be21648998020af3bc0a35, type: 3}
+  m_ShaderKeywords: MOVEMENT WORLDSPACE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _AlbedoBright: 0.5
+    - _BaseBoost: 1.73
+    - _ElecBoost: 1
+    - _ElectronBoost: 3
+    - _EmissiveBright: 0.87
+    - _Freq: 2.3
+    - _MOVEMENT: 1
+    - _MinElectronLayer: 3
+    - _Octaves: 5
+    - _Persistence: 0.899
+    - _Scale: 0.25
+    - _Seed: 11645
+    - _Seed2: 43989.27
+    - _TraceBoost: 2
+    - _WORLDSPACE: 1
+    - _WORLEY: 0
+    m_Colors:
+    - _Albedo: {r: 0.337, g: 0.8161765, b: 0, a: 1}
+    - _Color: {r: 0.641, g: 1, b: 0, a: 1}
+    - _ElecComp: {r: 0.01, g: 0.035, b: -0.25, a: 20.46}
+    - _Emissive: {r: 0.483, g: 0.828, b: 0, a: 1}
+    - _Movement: {r: 0, g: 0, b: 0, a: 1}
+    - _MovementSpeed: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 1}
+    - _Pan: {r: -1, g: 2, b: 1, a: 55}
+    - _TraceComp: {r: 0, g: 0.05, b: 1.5, a: 0.1}
+    - _Traces: {r: -0.02, g: 0.05, b: 8.77, a: 2.86}
+    - _VoroComp: {r: 0.57, g: -0.79, b: 0.37, a: 0.66}

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Urban
+  m_Shader: {fileID: 4800000, guid: 405f88ee25f4e094f86ee052148fbe9d, type: 3}
+  m_ShaderKeywords: SWIZLE_OCTAVES
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _BumpAmt: 0.648
+    - _BumpOctaves: 6.95
+    - _BumpPersistence: 0.564
+    - _BumpScale: 70.9
+    - _DiffLayers: 6
+    - _DiffNoiseJump: 2.26
+    - _Glossiness: 0.033
+    - _Metallic: 0.236
+    - _Octaves: 5.46
+    - _Persistence: 1
+    - _SWIZLE_OCTAVES: 1
+    - _Scale: 3.92
+    - _Seed: 13421.69
+    - _WORLDSPACE: 0
+    m_Colors:
+    - _Clips: {r: 1.4, g: 0.33, b: 0.29, a: 0.4}
+    - _Color1: {r: 0.97647065, g: 0.9843138, b: 0.97647065, a: 1}
+    - _Color2: {r: 0.8196079, g: 0.75294125, b: 0.83921576, a: 1}
+    - _Color3: {r: 0.4039216, g: 0.36078432, b: 0.5019608, a: 1}
+    - _Color4: {r: 0.10196079, g: 0.050980397, b: 0.14117648, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 1}
+    - _Stretch: {r: 2, g: 0.6, b: 2, a: 0.5}

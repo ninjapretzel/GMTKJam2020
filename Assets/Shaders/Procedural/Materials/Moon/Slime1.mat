@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Slime1
+  m_Shader: {fileID: 4800000, guid: d8eafb7dd3681fa48a4faff24d4f87cc, type: 3}
+  m_ShaderKeywords: FANCY_PARALLAX WORLEY
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Base: 0
+    - _Bias: 0
+    - _BumpAmt: 4
+    - _BumpOctaves: 6.14
+    - _BumpPersistence: 0.943
+    - _BumpScale: 13.1
+    - _CamDistScale: 21
+    - _CraterFreq: 1.8
+    - _CraterLip: 0.678
+    - _CraterMax: 0.369
+    - _CraterMin: 0.635
+    - _CraterOctaves: 3.75
+    - _Cutoff: 0.5
+    - _DepthLayers: 2
+    - _DetScale: 4
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _FANCY_PARALLAX: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0.621
+    - _GlossyReflections: 1
+    - _HeightPower: 0.2
+    - _HeightScale: 25
+    - _Metallic: 0.169
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Octaves: 8
+    - _Parallax: 44
+    - _ParallaxDistanceEffect: 1
+    - _Persistence: 0.961
+    - _Polish: 1.27
+    - _Scale: 1
+    - _Seed: 31623
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _VoroScale: 5.4
+    - _WORLDSPACE: 0
+    - _WORLEY: 1
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.22464873, g: 0.41911763, b: 0.18798658, a: 1}
+    - _Color2: {r: 0.18382353, g: 0.04325259, b: 0.104328215, a: 1}
+    - _Color3: {r: 0.1, g: 0.052, b: 0.03, a: 1}
+    - _Color4: {r: 0.15, g: 0.072, b: 0.06, a: 1}
+    - _CraterComp: {r: -0.52, g: -0.62, b: 0.1, a: 1}
+    - _CraterShift: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 1}

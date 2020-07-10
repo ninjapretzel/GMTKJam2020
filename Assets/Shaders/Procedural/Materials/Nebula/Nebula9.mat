@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Nebula9
+  m_Shader: {fileID: 4800000, guid: ff1ade8a72d25b84e8e465eb7ed01e9e, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _CloudSurfaceLevel: 84
+    - _Dust: 0.5
+    - _EmissiveBlending: 0.02
+    - _MaxDepth: 0
+    - _MinStep: -3
+    - _Octaves: 6
+    - _Persistence: 0.381
+    - _Scale: 1
+    - _Seed: 31383.73
+    - _StepScale: 0
+    - _StepSize: 11
+    - _StepStart: 1
+    - _Thickness: 0.119
+    - _Volsteps: 128
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorOffset: {r: -2, g: 3, b: 1, a: 2}
+    - _ColorScale: {r: 1, g: 1, b: -1, a: 0.1}

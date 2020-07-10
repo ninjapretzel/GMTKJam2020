@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Something
+  m_Shader: {fileID: 4800000, guid: 38aae42e1eca6574299cc0b52d4a4d01, type: 3}
+  m_ShaderKeywords: FANCY_PARALLAX
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _BumpAmt: 1.086
+    - _BumpOctaves: 6
+    - _BumpPersistence: 0.897
+    - _BumpScale: 11.4
+    - _CamDistScale: 21
+    - _DepthBias: 0
+    - _DepthLayers: 8
+    - _FANCY_PARALLAX: 1
+    - _Factor: 0.424
+    - _Glossiness: 0.677
+    - _HeightFactor: 0.335
+    - _HeightScale: 5.39
+    - _Marbling: 22
+    - _Metallic: 0.653
+    - _OcclusionScale: 0
+    - _Octaves: 9.5
+    - _Parallax: 77
+    - _ParallaxDistanceEffect: 1
+    - _Persistence: 0.752
+    - _Scale: 0.3
+    - _Seed: 31414.9
+    - _WORLDSPACE: 0
+    m_Colors:
+    - _Color: {r: 1, g: 0.97423923, b: 0.066176474, a: 1}
+    - _Color2: {r: 0.9705882, g: 0.62251514, b: 0, a: 1}
+    - _Marbling: {r: 1, g: 0, b: 0, a: 22}
+    - _Offset: {r: 33, g: 33, b: 33, a: 0.1}
+    - _Stretch: {r: 2, g: 1, b: 2, a: 1}
