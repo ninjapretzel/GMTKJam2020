@@ -2,17 +2,17 @@ Shader "Skybox/TechGodrays" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
 		
-		_GodRay ("Godrays Color", Color) = (1,1,1,1)
-		_GodRayParam ("GodRay Param", Vector) = (4, .5, 1, 1)
-		_GodRayPow("GodRay Power", Float) = 5
-		_GodRayStr("GodRay Strength", Float) = .2
-		_GodRayFade("GodRay Fade", Float) = 2
+		_GodRay ("Godrays Color", Color) = (.4485,.0431,1,1)
+		_GodRayParam ("GodRay Param", Vector) = (22, .53, 1, 1)
+		_GodRayPow("GodRay Power", Float) = 25.7
+		_GodRayStr("GodRay Strength", Float) = 154.57
+		_GodRayFade("GodRay Fade", Float) = 171.2
 		
-		_Horizon1("Horizon Color 1", Color) = (1,1,1,1)
-		_HorizonPow1("Horizon Power 1", Float) = .01
+		_Horizon1("Horizon Color 1", Color) = (.7764,.3647,1,1)
+		_HorizonPow1("Horizon Power 1", Float) = 7.49
 
-		_Horizon2("Horizon Color 2", Color) = (1,1,1,1)
-		_HorizonPow2("Horizon Power 2", Float) = .01
+		_Horizon2("Horizon Color 2", Color) = (0,.8825,1,1)
+		_HorizonPow2("Horizon Power 2", Float) = 10.6
 	}
 
 	SubShader {
