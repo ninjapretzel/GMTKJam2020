@@ -113,7 +113,9 @@ namespace Ex {
 		/// <param name="other"> Cell to transfer to </param>
 		/// <param name="id"> Id of entity to transfer </param>
 		public void TransferEntity(Cell other, Guid id) {
-			if (entities.Contains(id) && !other.entities.Contains(id)) {
+			bool thisHas = entities.Contains(id);
+			bool otherLacks = !other.entities.Contains(id);
+			if (thisHas && otherLacks) {
 				entities.Remove(id);
 				other.entities.Add(id);
 				Client c = map.service.server.GetClient(id);
@@ -143,7 +145,7 @@ namespace Ex {
 				}
 
 			} else {
-				Log.Warning($"Cell.TransferEntity: Map {map.identity} cell {cellPos} and {other.cellPos} cannot transfer entity {id}");
+				Log.Warning($"Cell.TransferEntity: Map {map.identity} cell {cellPos} and {other.cellPos} cannot transfer entity {id}. ThisHas:{thisHas}, OtherLacks:{otherLacks}");
 			}
 		}
 

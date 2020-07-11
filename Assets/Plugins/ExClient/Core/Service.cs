@@ -24,11 +24,16 @@ namespace Ex {
 		/// <summary> Is this service running on a slave/client server? </summary>
 		public bool isSlave { get { return server.isSlave; } }
 
+
+		/// <summary> Called when the server is started. </summary>
+		internal void Started() { OnStart(); }
 		/// <summary> Called within AddService() to enable the service </summary>
 		internal void Enable() { OnEnable(); enabled = true; }
 		/// <summary> Called within RemoveService() to disable the service </summary>
 		internal void Disable() { enabled = false; OnDisable(); }
 		
+		/// <summary> Callback when the server is started. Does not get called if the server is already running. </summary>
+		public virtual void OnStart() { }
 		/// <summary> Callback when the Service is added to a Servcer </summary>
 		public virtual void OnEnable() { }
 		/// <summary> Callback when the Service is removed from the server </summary>

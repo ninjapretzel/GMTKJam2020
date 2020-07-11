@@ -9,6 +9,8 @@ namespace Ex {
 	/// <summary> Service that includes core functionality. Always on a server by default. </summary>
 	public class CoreService : Service {
 
+		public override void OnStart() { }
+
 		public override void OnConnected(Client client) {
 			// Log.Info($"Core Service connected {client.identity}");
 			if (server.isSlave) {

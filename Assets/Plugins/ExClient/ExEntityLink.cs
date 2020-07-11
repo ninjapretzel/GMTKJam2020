@@ -7,6 +7,13 @@ using System.Reflection;
 
 public class ExEntityLink : MonoBehaviour {
 
+	/// <summary> Callback to fire when the player object is linked. </summary>
+	public static Action<ExPlayerLink> OnPlayerLinked;
+	/// <summary> Callback to fire when the player is logged in. </summary>
+	public static Action OnPlayerLoggedIn;
+	/// <summary> Callback to fire when the map changes. </summary>
+	public static Action<MapService.MapChange_Client> OnPlayerMapChanged;
+
 	/// <summary> Attribute used to search for callbacks for automatic registration </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public class AutoRegisterChangeAttribute : Attribute {}
@@ -105,6 +112,18 @@ public class ExEntityLink : MonoBehaviour {
 		EntityService entityService { get { return daemon != null ? daemon.client?.GetService<EntityService>() : null;} }
 		public void Bind(ExDaemon daemon) { this.daemon = daemon; }
 
+		public void On(LoginService.LoginSuccess_Client login) {
+			daemon.RunOnMainThread(() => {
+				OnPlayerLoggedIn?.Invoke();
+			});
+		}
+
+		public void On(MapService.MapChange_Client mapChange) {
+			daemon.RunOnMainThread(() => {
+				OnPlayerMapChanged?.Invoke(mapChange);
+			});
+		}
+
 		public void On(MapService.RubberBand_Client rubber) {
 			daemon.RunOnMainThread(()=> {
 				Guid id = rubber.id;
@@ -148,6 +167,8 @@ public class ExEntityLink : MonoBehaviour {
 				Guid id = local.id;
 				var playerLink = links[id].gameObject.AddComponent<ExPlayerLink>();
 				playerLink.service = this;
+
+				OnPlayerLinked?.Invoke(playerLink);
 			});
 		}
 

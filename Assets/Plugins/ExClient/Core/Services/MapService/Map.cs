@@ -258,8 +258,10 @@ namespace Ex {
 					// move.oldPos is populated with the TRS position at the time of creating the move request.
 					// move.newPos is the desired destination
 					// Delta only matters if the client is sending the move.
+					Vector3 oldPos = trs.position;
+					Vector3 oldRot = trs.rotation;
 
-					var delta = move.oldPos - move.newPos;
+					var delta = oldPos - move.newPos;
 					bool posInMap = Contains(info.bounds, info.boundsShape, move.newPos);
 
 					if (posInMap && (move.serverMove || delta.magnitude < speedCap)) {
@@ -269,16 +271,16 @@ namespace Ex {
 						trs.rotation = move.newRot;
 						trs.Send();
 
-						var oldCellPos = CellPositionFor(move.oldPos);
+						var oldCellPos = CellPositionFor(oldPos);
 						var newCellPos = CellPositionFor(move.newPos);
 
 						if (oldCellPos != newCellPos) {
 							Cell oldCell = GetCell(oldCellPos);
 							Cell newCell = RequireCell(newCellPos);
 							
+							Log.Info($"Entity {move.id} moving from {oldCellPos} => {newCellPos}.");
 							oldCell.TransferEntity(newCell, move.id);
 
-							Log.Debug($"Entity {move.id} moved from {oldCellPos} => {newCellPos}.");
 						}
 						
 					} else {
@@ -291,7 +293,7 @@ namespace Ex {
 						}
 						
 						if (client != null) {
-							client.Call(service.Rubberband, Pack.Base64(move.id), Pack.Base64(move.oldPos), Pack.Base64(move.oldRot));
+							client.Call(service.Rubberband, Pack.Base64(move.id), Pack.Base64(oldPos), Pack.Base64(oldRot));
 						}
 						
 					}
@@ -333,9 +335,7 @@ namespace Ex {
 				entityService.AddComponent<TRS>(entityId);
 				serverMove = true;
 			}
-
-			move.oldPos = trs.position;
-			move.oldRot = trs.rotation;
+			
 			move.newPos = position ?? trs.position;
 			move.newRot = rotation ?? trs.rotation;
 			move.serverMove = serverMove;

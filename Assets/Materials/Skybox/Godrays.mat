@@ -23,11 +23,11 @@ Material:
     - _GodRayFade: 171.2
     - _GodRayPow: 25.7
     - _GodRayStr: 154.57
-    - _HorizonPow1: 7.49
-    - _HorizonPow2: 10.6
+    - _HorizonPow1: 0
+    - _HorizonPow2: 73.34
     m_Colors:
     - _Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
     - _GodRay: {r: 0.4485, g: 0.0431, b: 1, a: 1}
     - _GodRayParam: {r: 22, g: 0.53, b: 1, a: 1}
     - _Horizon1: {r: 0.7764, g: 0.3647, b: 1, a: 1}
-    - _Horizon2: {r: 0, g: 0, b: 0, a: 1}
+    - _Horizon2: {r: 1, g: 0.43137258, b: 1, a: 1}

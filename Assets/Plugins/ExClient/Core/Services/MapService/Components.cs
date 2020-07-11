@@ -35,7 +35,7 @@ namespace Ex {
 	}
 
 	/// <summary> Component that gives entity a physical location </summary>
-	public class TRS : Comp {
+	[OthersOnlySync] public class TRS : Comp {
 		/// <summary> Location of entity </summary>
 		public Vector3 position;
 		/// <summary> Rotation of entity (euler angles) </summary>

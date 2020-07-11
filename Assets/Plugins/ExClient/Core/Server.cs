@@ -149,7 +149,6 @@ namespace Ex {
 			lastTick = DateTime.UtcNow;
 		}
 		
-		public struct Started { public DateTime timestamp; }
 		public void Start() {
 			
 			Running = true;
@@ -161,8 +160,7 @@ namespace Ex {
 			mainSendThread = StartThread(SendLoop);
 			mainRecrThread = StartThread(RecrLoop);
 
-
-			On(new Started() { timestamp = DateTime.UtcNow } );
+			foreach (var pair in services) { pair.Value.Started(); }
 		}
 
 		public void Stop() {

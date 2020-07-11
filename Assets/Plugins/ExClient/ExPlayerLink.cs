@@ -9,6 +9,8 @@ public class ExPlayerLink : MonoBehaviour {
 
 	public ExEntityLink.ExEntityLinkService service;
 	private MapService mservice { get { return service.GetService<MapService>(); }}
+	private bool initialized = false;
+
 
 	public float distanceThreshold = .2f;
 	public float angleThreshold = 3f;
@@ -17,9 +19,24 @@ public class ExPlayerLink : MonoBehaviour {
 
 	Vector3 lastPos;
 	Quaternion lastRot;
+	
+	void OnLogin() {
+		initialized = true;
+	}
+
+	void OnMapChange(MapService.MapChange_Client mapChange) {
+		lastPos = transform.position = mapChange.pos;
+		lastRot = transform.rotation = Quaternion.Euler(mapChange.rot);
+	}
+
+	void OnEnable() {
+		ExEntityLink.OnPlayerLoggedIn += OnLogin;
+		ExEntityLink.OnPlayerMapChanged += OnMapChange;
+	}
 
 	void Update() {
 		if (service == null) { return; }
+		if (!initialized) { return; }
 
 		ExEntityLink link = GetComponent<ExEntityLink>();
 		timer += Time.unscaledDeltaTime;

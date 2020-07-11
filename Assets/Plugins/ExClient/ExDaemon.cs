@@ -38,10 +38,7 @@ public class ExDaemon : MonoBehaviour {
 				Debug.LogWarning($"Error running function on main thread {e.InfoString()}");
 			}
 		}
-
-
 		
-
 	}
 
 

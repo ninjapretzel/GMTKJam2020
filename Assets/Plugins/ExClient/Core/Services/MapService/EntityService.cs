@@ -23,6 +23,9 @@ namespace Ex {
 	/// <summary> Attribute to be applied to <see cref="Comp"/> classes that are hidden from clients that do not 'own' the component. </summary>
 	[AttributeUsage(AttributeTargets.Class)]
 	public class OwnerOnlySyncAttribute : Attribute { }
+	/// <summary> Attribute to be applied to <see cref="Comp"/> classes that are not sent to their owners, (eg avoid client-side jitter) </summary>
+	[AttributeUsage(AttributeTargets.Class)]
+	public class OthersOnlySyncAttribute : Attribute { }
 
 	/// <summary> Service which manages the creation and tracking of entities. 
 	/// Entities are automatically created for connecting clients and removed for disconnecting ones.  </summary>
@@ -42,43 +45,112 @@ namespace Ex {
 		/// <summary> Message sent when an entity is marked as the local entity. Sent once when the entity is first sync'd to its own client. </summary>
 		public struct SetLocalEntity { public Guid id; }
 		#endregion
-		
+
 
 #if !UNITY
+
 		[BsonIgnoreExtraElements]
 		public class UserEntityInfo : DBEntry {
-
 			public string map { get; set; }
 			public Vector3 position { get; set; }
 			public Vector3 rotation { get; set; }
-
 		}
 		
+		/// <summary> Connected DBService </summary>
+		DBService db;
+		/// <summary> Connected MapService </summary>
+		MapService mapService;
+		/// <summary> Connected LoginService </summary>
+		LoginService loginService;
+		
+		public override void OnStart() {
+			db = GetService<DBService>();
+			mapService = GetService<MapService>();
+			loginService = GetService<LoginService>();
+			loginService.userInitializer += InitializeEntityInfo;
+
+		}
+
 		public void InitializeEntityInfo(Guid userID) {
-			
+
 			Log.Info($"Initializing EntityInfo for {userID}");
 			UserEntityInfo info = new UserEntityInfo();
 			info.position = Vector3.zero;
 			info.rotation = Vector3.zero;
 			info.map = "Limbo";
 			info.guid = userID;
-			
-			GetService<DBService>().Save(info);
+
+			db.Save(info);
 			Log.Info($"Saved EntityInfo for {userID}");
 
-			var check = GetService<DBService>().Get<UserEntityInfo>(userID);
+			var check = db.Get<UserEntityInfo>(userID);
 			Log.Info($"Retrieved saved info? {check}");
 
-			
+
 		}
-		
+		/// <summary> Called when a login occurs. </summary>
+		/// <param name="succ"></param>
+		public void On(LoginService.LoginSuccess_Server succ) {
+			if (!isMaster) { return; }
+			Log.Info("EntityService.On(LoginSuccess_Server)");
+
+			Client client = succ.client;
+			Guid clientId = client.id;
+			Log.Info($"{nameof(EntityService)}: Got LoginSuccess for {succ.client.identity} !");
+			var user = loginService.GetLogin(client);
+			Guid userId = user.HasValue ? user.Value.credentials.userId : Guid.Empty;
+			string username = user.HasValue ? user.Value.credentials.username : "[NoUser]";
+			
+			UserEntityInfo info = db.Get<UserEntityInfo>(userId);
+			var trs = AddComponent<TRS>(clientId);
+			var nameplate = AddComponent<Nameplate>(clientId);
+			var display = AddComponent<Display>(clientId);
+
+			//{ // Testing: Add some data and see if it is synced/hidden properly
+			//	var hidden = AddComponent<SomeHiddenData>(clientId);
+			//	var secret = AddComponent<SomeSecretData>(clientId);
+			//	hidden.key = 123456789;
+			//	secret.key = 987654321;
+			//	hidden.Send(); // Gotta remember to send component data to clients, even if it may be hidden.
+			//	secret.Send();
+			//}
+
+			Log.Info($"OnLoginSuccess_Server for user {clientId} -> { username } / UserID={userId }, EntityInfo={info}, TRS={trs}");
+			if (username != "admin") {
+				nameplate.name = username;
+				display.prefab = "Models/Cube";
+			} else {
+				nameplate.name = "";
+				display.prefab = "Empty";
+			}
+
+			display.Send();
+			nameplate.Send();
+
+
+
+			if (info != null) {
+
+				trs.position = info.position;
+				trs.rotation = info.rotation;
+				trs.scale = Vector3.one;
+
+				Log.Info($"{client.identity} Entering map at {info.position} / {info.rotation}");
+				
+				mapService.EnterMap(client, info.map, info.position, info.rotation);
+				trs.Send();
+
+			} else {
+
+			}
+		}
 		public const bool DEBUG_TYPES = true;
 
 		/// <summary> EntityInfo (spawn source) data cached from database by type </summary>
 		public ConcurrentDictionary<string, EntityInfo> entityInfos;
 		public EntityInfo GetEntityInfo(string typeName) {
 			if (entityInfos.ContainsKey(typeName)) { return entityInfos[typeName]; }
-			var info = (entityInfos[typeName] = GetService<DBService>().Get<EntityInfo>("Content", "type", typeName));
+			var info = (entityInfos[typeName] = db.Get<EntityInfo>("Content", "type", typeName));
 			
 			if (DEBUG_TYPES) {
 				Log.Debug($"Baking type info into {typeof(Ex.Typed).FullName} for {typeName}");
@@ -199,7 +271,7 @@ namespace Ex {
 				subscribers = new ConcurrentDictionary<Guid, ConcurrentSet<Client>>();
 #if !UNITY
 				entityInfos = new ConcurrentDictionary<string, EntityInfo>();
-				GetService<LoginService>().userInitializer += InitializeEntityInfo;
+				
 #endif
 			}
 		}
@@ -210,10 +282,7 @@ namespace Ex {
 			if (isMaster) {
 #if !UNITY
 				entityInfos = null;
-				var login = GetService<LoginService>();
-				if (login != null) {
-					login.userInitializer -= InitializeEntityInfo;
-				}
+				
 				/// Should have already sent disconnect messages to connected clients 
 				subscriptions.Clear();
 				subscribers.Clear();
@@ -221,6 +290,7 @@ namespace Ex {
 			}
 
 		}
+
 
 		/// <summary> Server -> Client RPC. Requests that the client spawn a new entity </summary>
 		/// <param name="msg"> RPC Info. </param>
@@ -367,6 +437,7 @@ namespace Ex {
 		private static ConcurrentDictionary<Type, MethodInfo> GENERIC_UNPACKERS;
 		private static ConcurrentDictionary<Type, bool> SERVER_ONLY;
 		private static ConcurrentDictionary<Type, bool> OWNER_ONLY;
+		private static ConcurrentDictionary<Type, bool> OTHERS_ONLY;
 		/// <summary> Get (bake if not present) data packer MethodInfo </summary>
 		public static MethodInfo GET_PACKER(Type t) {
 			if (!t.IsValueType) { return null; }
@@ -413,6 +484,13 @@ namespace Ex {
 			}
 			return OWNER_ONLY[t];
 		}
+		public static bool IS_OTHERS_ONLY(Type t) {
+			if (OTHERS_ONLY == null) { INITIALIZE_CACHES(); }
+			if (!OTHERS_ONLY.ContainsKey(t)) {
+				OTHERS_ONLY[t] = t.GetCustomAttribute<OthersOnlySyncAttribute>() != null;
+			}
+			return OTHERS_ONLY[t];
+		}
 		private static void INITIALIZE_CACHES() {
 			PACKER = typeof(Pack).GetMethod("Base64", BindingFlags.Static | BindingFlags.Public);
 			UNPACKER = typeof(Unpack).GetMethod("Base64", BindingFlags.Static | BindingFlags.Public);
@@ -420,6 +498,7 @@ namespace Ex {
 			GENERIC_UNPACKERS = new ConcurrentDictionary<Type, MethodInfo>();
 			SERVER_ONLY = new ConcurrentDictionary<Type, bool>();
 			OWNER_ONLY = new ConcurrentDictionary<Type, bool>();
+			OTHERS_ONLY = new ConcurrentDictionary<Type, bool>();
 		}
 
 		/// <summary> Server -> Client RPC. Requests the client set information into a component. </summary>
@@ -621,32 +700,32 @@ namespace Ex {
 
 				TRS trs = GetComponent<TRS>(entity);
 				OnMap onMap = GetComponent<OnMap>(entity);
-
-				var db = GetService<DBService>();
-				var loginService = GetService<LoginService>();
-
+				
 				LoginService.Session? session = loginService.GetLogin(client);
 				Credentials creds;
 				if (session.HasValue) {
 					creds = session.Value.credentials;
-					Log.Verbose($"EntityService.OnDisconnected: Getting entity for client {client.identity}, id={creds.userId}/{creds.username}");
+					Log.Info($"EntityService.OnDisconnected: Getting entity for client {client.identity}, id={creds.userId}/{creds.username}");
 
 					var info = db.Get<UserEntityInfo>(creds.userId);
 					if (info == null) {
 						Log.Error($"EntityService.OnDisconnected: Problem, no EntityInfo was initialized for {creds.userId}");
+					} else {
+						info.position = trs.position;
+						info.rotation = trs.rotation;
 					}
 					if (onMap != null) {
 						
 						info.map = onMap.mapId;
 					}
 					
-					Log.Debug($"EntityService.OnDisconnected: Saving entity data for {creds.username} ");
+					Log.Info($"EntityService.OnDisconnected: Saving entity data for {creds.username} ");
 					db.Save(info);
 					
 
 				} else {
 				
-					Log.Verbose($"EntityService.OnDisconnected: No login session for {client.identity}, skipping saving entity data.");
+					Log.Info($"EntityService.OnDisconnected: No login session for {client.identity}, skipping saving entity data.");
 				}
 
 				
@@ -669,7 +748,7 @@ namespace Ex {
 				if (onMap != null) {
 					// If they are on a map, delay revocation until map is ready.
 					Log.Debug($"\\eRemoving {client.identity} from {onMap.mapId}:{onMap.mapInstanceIndex}");
-					GetService<MapService>().ExitMap(client, onMap.mapId, onMap.mapInstanceIndex);
+					mapService.ExitMap(client, onMap.mapId, onMap.mapInstanceIndex);
 				} else {
 					// Otherwise revoke it here and now.
 					// This happens for example, if they do not log in.
@@ -679,52 +758,6 @@ namespace Ex {
 			}
 		}
 
-		/// <summary> Called when a login occurs. </summary>
-		/// <param name="succ"></param>
-		public void On(LoginService.LoginSuccess_Server succ) {
-			if (!isMaster) { return; }
-			Log.Info("EntityService.On(LoginSuccess_Server)");
-
-			Client client = succ.client;
-			Guid clientId = client.id;
-			Log.Info($"{nameof(EntityService)}: Got LoginSuccess for {succ.client.identity} !");
-			var user = GetService<LoginService>().GetLogin(client);
-			Guid userId = user.HasValue ? user.Value.credentials.userId : Guid.Empty;
-			string username = user.HasValue ? user.Value.credentials.username : "[NoUser]";
-
-			var db = GetService<DBService>();
-			UserEntityInfo info = db.Get<UserEntityInfo>(userId);
-			var trs = AddComponent<TRS>(clientId);
-			var nameplate = AddComponent<Nameplate>(clientId);
-
-			//{ // Testing: Add some data and see if it is synced/hidden properly
-			//	var hidden = AddComponent<SomeHiddenData>(clientId);
-			//	var secret = AddComponent<SomeSecretData>(clientId);
-			//	hidden.key = 123456789;
-			//	secret.key = 987654321;
-			//	hidden.Send(); // Gotta remember to send component data to clients, even if it may be hidden.
-			//	secret.Send();
-			//}
-
-			Log.Info($"OnLoginSuccess_Server for user {clientId} -> { username } / UserID={userId }, EntityInfo={info}, TRS={trs}");
-			nameplate.name = username;
-			nameplate.Send();
-
-			
-			if (info != null) {
-
-				trs.position = info.position;
-				trs.rotation = info.rotation;
-				trs.scale = Vector3.one;
-
-				trs.Send();
-
-				GetService<MapService>().EnterMap(client, info.map, info.position, info.rotation);
-			
-			} else {
-					
-			}
-		}
 #endif
 
 		/// <summary> Gets the ConditionalWeakTable for a given entity type. </summary>
@@ -896,13 +929,20 @@ namespace Ex {
 			return table.Remove(entity);
 		}
 
+		// <summary> Flags to modify <see cref="SendComponent(Comp, SendFlags)"/> to force data to owner. </summary>
+		//[Flags] public enum SendFlags {
+		//	None = 0,
+		//	ForceToOwner = 0x0001
+		//}
 		/// <summary> Sends the information for a component to all subscribers of that component's entity </summary>
 		/// <param name="comp"> Component to send </param>
-		public void SendComponent(Comp comp) {
+		public void SendComponent(Comp comp) {//, SendFlags flags = SendFlags.None) {
 			Type t = comp.GetType();
 			bool serverOnly = IS_SERVER_ONLY(t);
 			if (serverOnly) { return; }
 			bool ownerOnly = IS_OWNER_ONLY(t);
+			bool othersOnly = IS_OTHERS_ONLY(t); // && !(flags == SendFlags.ForceToOwner);
+			bool always = !ownerOnly && !othersOnly;
 
 			Guid id = comp.entityId;
 			var subs = subscribers[id];
@@ -914,8 +954,8 @@ namespace Ex {
 				// TODO: If we need, add a component type for owning by proxy
 				//		check for the component on the object, and check if the id matches.
 				bool clientOwns = sub.id == id;
-
-				if (!ownerOnly || clientOwns) {
+				
+				if (always || (clientOwns && ownerOnly) || (!clientOwns && othersOnly)) {
 					sub.Call(SetComponentInfo, args);
 				}
 			}

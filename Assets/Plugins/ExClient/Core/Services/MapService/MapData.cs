@@ -129,12 +129,8 @@ namespace Ex {
 	public struct EntityMoveRequest {
 		/// <summary> ID of entity to move </summary>
 		public Guid id;
-		/// <summary> Assumed old position of the entity </summary>
-		public Vector3 oldPos;
 		/// <summary> new position of the entity </summary>
 		public Vector3 newPos;
-		/// <summary> Assumed old rotation of the entity </summary>
-		public Vector3 oldRot;
 		/// <summary> new rotation of the entity </summary>
 		public Vector3 newRot;
 		/// <summary> true if the server is instigating this movement, false if it is a client </summary>

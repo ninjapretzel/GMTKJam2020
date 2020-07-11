@@ -36,12 +36,19 @@ namespace Ex {
 			public string mapName;
 			/// <summary> Instance of map </summary>
 			public int? mapInstanceIndex;
+			/// <summary> New position on map </summary>
+			public Vector3 pos;
+			/// <summary> New rotation on map </summary>
+			public Vector3 rot;
+
 		}
 
 		#if !UNITY
 		
-		/// <summary> Connected DBService</summary>
-		public DBService dbService { get { return GetService<DBService>(); } }
+		/// <summary> Connected DBService </summary>
+		public DBService db;
+		/// <summary> Connected EntityService </summary>
+		public EntityService entityService;
 
 		/// <summary> Cached MapInfo from database </summary>
 		public ConcurrentDictionary<string, MapInfo> mapInfoByName;
@@ -54,8 +61,13 @@ namespace Ex {
 
 		/// <summary> Work pool for map instances. </summary>
 		public WorkPool<Map> mapWorkPool;
+
+		public override void OnStart() {
+			db = GetService<DBService>();
+			entityService = GetService<EntityService>();
+		}
 		#endif
-		
+
 		public override void OnEnable() {
 			#if !UNITY
 			if (isMaster) {
@@ -95,7 +107,7 @@ namespace Ex {
 				// right now, just a direct id check 
 				if (id != msg.sender.id) { return; }
 
-				Entity entity = GetService<EntityService>()[id];
+				Entity entity = entityService[id];
 				if (entity != null) {
 					OnMap onMap = entity.GetComponent<OnMap>();
 					if (onMap != null) {
@@ -128,13 +140,16 @@ namespace Ex {
 		/// <param name="msg"> RPC Message info </param>
 		public void SetMap(RPCMessage msg) {
 			if (isSlave) {
-				if (msg.numArgs < 1) { return; }
+				if (msg.numArgs < 3) { return; }
 				MapChange_Client mapChange;
 				mapChange.mapName = msg[0];
 				mapChange.mapInstanceIndex = null;
-				if (msg.numArgs >= 2) {
+				mapChange.pos = Unpack.Base64<Vector3>(msg[1]);
+				mapChange.rot = Unpack.Base64<Vector3>(msg[2]);
+				
+				if (msg.numArgs >= 4) {
 					int v;
-					if (int.TryParse(msg[1], out v)) {
+					if (int.TryParse(msg[3], out v)) {
 						mapChange.mapInstanceIndex = v;
 					}
 				}
@@ -154,7 +169,7 @@ namespace Ex {
 			//Log.Debug($"Loading map {map}");
 			// Load the map from db, or the limbo map if it doesn't exist.
 			if (!mapInfoByName.ContainsKey(map)) {
-				var loadedMap = dbService.Get<MapInfo>("Content", "name", map) ?? dbService.Get<MapInfo>("Content", "name", "Limbo");
+				var loadedMap = db.Get<MapInfo>("Content", "name", map) ?? db.Get<MapInfo>("Content", "name", "Limbo");
 				mapInfoByName[map] = loadedMap;
 				string s = loadedMap?.ToString() ?? "NULL";
 				Log.Debug($"Loaded MapInfo for {{{map}}}");
@@ -227,20 +242,16 @@ namespace Ex {
 
 			Log.Info($"\\jGot map { map.identity }");
 			map.EnterMap(client);
-
-			if (position != null || rotation != null) {
-				map.Move(client.id, position, rotation);
-
-				// Call RPCs for initializing clients
-				client.Call(Rubberband, Pack.Base64(position), Pack.Base64(rotation));
-
-				if (mapInstanceIndex != null) {
-					client.Call(SetMap, mapId, mapInstanceIndex.Value);
-				} else {
-					client.Call(SetMap, mapId);
-				}
-				
+			
+			map.Move(client.id, position, rotation, true);
+			
+			// Call RPC for initializing clients
+			if (mapInstanceIndex != null) {
+				client.Call(SetMap, mapId, Pack.Base64(position), Pack.Base64(rotation), mapInstanceIndex.Value);
+			} else {
+				client.Call(SetMap, mapId, Pack.Base64(position), Pack.Base64(rotation));
 			}
+			
 			
 		}
 			

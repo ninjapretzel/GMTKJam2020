@@ -37,6 +37,12 @@ namespace Ex {
 			else { throw new InvalidOperationException("Comp.Send: Components may only be sent from the server!"); }
 		}
 
+		// <summary> Send component data to all subscribers, including owners. </summary>
+		//public void ForceSend() {
+		//	if (isMaster) { service.SendComponent(this, EntityService.SendFlags.ForceToOwner); }
+		//	else { throw new InvalidOperationException("Comp.ForceSend: Components may only be sent from the server!"); }
+		//}
+
 		public override string ToString() { return $"{entityId}'s {GetType().FullName}"; }
 
 		/// <summary> Dynamic lookup of attached entity. </summary>

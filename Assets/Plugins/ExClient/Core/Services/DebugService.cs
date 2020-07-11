@@ -8,6 +8,11 @@ namespace Ex {
 
 	/// <summary> Service providing network debugging messages when common events occur. </summary>
 	public class DebugService : Service {
+
+		public override void OnStart() {
+			Log.Info("Debug Service: Server Started.");
+		}
+
 		public override void OnEnable() {
 			Log.Verbose("Debug Service Enabled");
 		}

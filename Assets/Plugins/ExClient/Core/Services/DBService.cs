@@ -92,9 +92,6 @@ namespace Ex {
 		public MDB defaultDB { get; private set; }
 		public string dbName { get; private set; } = "debug";
 		public bool cleanedDB { get; private set; } = false;
-		
-		public override void OnEnable() {
-		}
 
 		private static string Filename(string filepath) {
 			return FromLast("/", ForwardSlashPath(filepath));

@@ -195,6 +195,13 @@ namespace Ex {
 		public Action<Guid> userInitializer;
 
 #if !UNITY
+		/// <summary> Connected DBService </summary>
+		DBService dbService;
+
+		public override void OnStart() {
+			dbService = GetService<DBService>();
+		}
+
 		public override void OnEnable() {
 			loginsByClient = new Dictionary<Client, Session>();
 			loginsByUserId = new Dictionary<Guid, Session>();
@@ -266,7 +273,7 @@ namespace Ex {
 		}
 
 		/// <summary> Connected database service </summary>
-		DBService dbService { get { return GetService<DBService>(); } }
+		
 		/// <summary> Client -> Server RPC. Checks user and credentials to validate login, responds with <see cref="LoginResponse(RPCMessage)"/></summary>
 		/// <param name="msg"> RPC Info. </param>
 		public void Login(RPCMessage msg) {
