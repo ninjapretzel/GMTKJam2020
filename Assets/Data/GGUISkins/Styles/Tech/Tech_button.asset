@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314bfab910f67f7429a512d7f65db5f6, type: 3}
+  m_Name: Tech_button
+  m_EditorClassIdentifier: 
+  font: {fileID: 11400000, guid: 88418bf0f93ca294a986f535ea0cb6d4, type: 2}
+  fontLegacy: {fileID: 0}
+  texture: {fileID: 0}
+  sprite: {fileID: 21300000, guid: eb018fbd460de8a4c94db153d1e2a5d3, type: 3}
+  subSprites: []
+  mat: {fileID: 0}
+  fontSize: -1
+  alignment: 514
+  overflow: 0
+  anchorLegacy: 4
+  horWrapLegacy: 0
+  verWrapLegacy: 1
+  autoScale: 1
+  autoSize: 0
+  imageType: 1
+  preserveAspect: 0
+  fillCenter: 1

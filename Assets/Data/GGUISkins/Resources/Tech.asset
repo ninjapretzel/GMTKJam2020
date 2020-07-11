@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba195a191e4102742bc47bd7eb810a40, type: 3}
+  m_Name: Tech
+  m_EditorClassIdentifier: 
+  defaultStyle: {fileID: 11400000, guid: ce0abad0ba1bff74fa2da558481c2cb7, type: 2}
+  styles:
+  - name: title
+    style: {fileID: 11400000, guid: 2ca2f2759b7fbab4fa01555598c987fc, type: 2}
+  - name: inputField
+    style: {fileID: 11400000, guid: 3fe16fd224bc1064b8c0d29af90b0420, type: 2}
+  - name: chat
+    style: {fileID: 11400000, guid: 8d32f7e3f927e324b982c8269b083511, type: 2}
