@@ -284,6 +284,22 @@ namespace Ex {
 			return collector;
 		}
 
+		/// <summary> Deletes and re-creates a model of a given type by GUID. </summary>
+		/// <typeparam name="T"> Generic type of database entry to reinitialize </typeparam>
+		/// <param name="guid"> Primary GUID to reinitialize for </param>
+		/// <param name="initializer"> Optional procedure to set up the thing. </param>
+		/// <returns> Created object </returns>
+		public T Initialize<T>(Guid guid, Action<T> initializer = null ) where T : DBEntry, new() {
+			Remove<T>(guid);
+			T thing = new T() { guid = guid };
+			
+			try { initializer?.Invoke(thing); } 
+			catch (Exception e) { Log.Error($"DBService.Initialize: Error in initializer of type {typeof(T)}.", e); }
+
+			Save(thing);
+			return thing;
+		}
+
 		/// <summary> Creates a <see cref="BDoc"/> out of every <see cref="JsonObject"/> in <paramref name="data"/>, and inserts each as a new record in the given <paramref name="database"/> and <paramref name="collection"/>. </summary>
 		/// <param name="database"> Database to add data to </param>
 		/// <param name="collection"> Collection to add data to </param>

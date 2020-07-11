@@ -25,9 +25,11 @@ public class LoginGUI : GGUIBehaviour {
 			});
 		}
 	}
+	public Transform titleScreenObjects;
 	public string title = "Defenders\nOf The\nPolyverse";
 	public GGUIBehaviour nextScreen;
 	public string lastFailReason = "";
+
 
 	string user = "";
 	string pass = "";
@@ -55,6 +57,11 @@ public class LoginGUI : GGUIBehaviour {
 		base.OnDisable();
 
 		exDaemon?.client?.RemoveService<LoginGUIService>();
+		if (titleScreenObjects != null) {
+			if (loginService.LoggedIn) {
+				titleScreenObjects.gameObject.SetActive(false);
+			}
+		}
 		loginService = null;
 
 	}

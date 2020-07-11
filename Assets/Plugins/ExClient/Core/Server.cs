@@ -148,7 +148,8 @@ namespace Ex {
 			AddService<CoreService>();
 			lastTick = DateTime.UtcNow;
 		}
-
+		
+		public struct Started { public DateTime timestamp; }
 		public void Start() {
 			
 			Running = true;
@@ -159,6 +160,9 @@ namespace Ex {
 			globalUpdateThread = StartThread(GlobalUpdate);
 			mainSendThread = StartThread(SendLoop);
 			mainRecrThread = StartThread(RecrLoop);
+
+
+			On(new Started() { timestamp = DateTime.UtcNow } );
 		}
 
 		public void Stop() {

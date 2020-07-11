@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tech__title
   m_EditorClassIdentifier: 
   font: {fileID: 11400000, guid: 88418bf0f93ca294a986f535ea0cb6d4, type: 2}
-  fontLegacy: {fileID: 12800000, guid: 90999e005f6d66b48bfd4579aeb96f0e, type: 3}
+  fontLegacy: {fileID: 12800000, guid: 82f10268dca0a334599740e580cf0827, type: 3}
   texture: {fileID: 0}
   sprite: {fileID: 0}
   subSprites: []

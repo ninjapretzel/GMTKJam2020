@@ -762,7 +762,7 @@ namespace Ex {
 				InteropString32 str = source;
 				string converted = str;
 				converted.ShouldNotEqual(source);
-				
+
 				InteropString256 str256 = source;
 				string converted256 = str256;
 				converted256.ShouldEqual(source);
@@ -783,6 +783,21 @@ namespace Ex {
 
 				Unsafe.FromBytes<StringAndStuff>(bytes).ShouldEqual(new StringAndStuff(123, "omg wtf lol bbq", 123.456f));
 
+			}
+		}
+
+		public static void TestGUIDPacking() {
+			byte[] bytes = new byte[] {
+				0x3f, 0xd5, 0xf2, 0xfe,							// 0,1,2,3,
+				0x51, 0x99,										// 4,5,
+				0x4f, 0x03,										// 6,7,
+				0x96, 0xc1, 0x4a, 0xea, 0xca, 0xdf, 0xe4, 0xe3	// 8,9,10,11,12,13,14,15
+			};
+			Guid guid = new Guid(bytes);
+
+			byte[] returned = Unsafe.ToBytes(guid);
+			for (int i = 0; i < returned.Length; i++) {
+				bytes.ShouldBeSame(returned);
 			}
 		}
 

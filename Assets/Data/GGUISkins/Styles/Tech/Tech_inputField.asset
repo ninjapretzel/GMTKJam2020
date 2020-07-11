@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Tech_inputField
   m_EditorClassIdentifier: 
   font: {fileID: 11400000, guid: 88418bf0f93ca294a986f535ea0cb6d4, type: 2}
-  fontLegacy: {fileID: 0}
+  fontLegacy: {fileID: 12800000, guid: 82f10268dca0a334599740e580cf0827, type: 3}
   texture: {fileID: 0}
   sprite: {fileID: 0}
   subSprites: []
   mat: {fileID: 0}
-  fontSize: 12
+  fontSize: 18
   alignment: 514
   overflow: 0
   anchorLegacy: 3

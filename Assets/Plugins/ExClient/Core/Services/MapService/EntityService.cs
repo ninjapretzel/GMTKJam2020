@@ -42,8 +42,7 @@ namespace Ex {
 		/// <summary> Message sent when an entity is marked as the local entity. Sent once when the entity is first sync'd to its own client. </summary>
 		public struct SetLocalEntity { public Guid id; }
 		#endregion
-
-
+		
 
 #if !UNITY
 		[BsonIgnoreExtraElements]
@@ -684,6 +683,7 @@ namespace Ex {
 		/// <param name="succ"></param>
 		public void On(LoginService.LoginSuccess_Server succ) {
 			if (!isMaster) { return; }
+			Log.Info("EntityService.On(LoginSuccess_Server)");
 
 			Client client = succ.client;
 			Guid clientId = client.id;
